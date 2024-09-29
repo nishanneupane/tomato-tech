@@ -74,7 +74,7 @@ const LandingPage = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ image: capturedImage }),
+          body: JSON.stringify({ file: capturedImage }),
         });
 
         if (!response.ok) {
@@ -82,7 +82,7 @@ const LandingPage = () => {
         }
 
         const result = await response.json();
-        setAnalysisResult(`Disease: ${result.disease}\n\nDescription: ${result.description}`);
+        setAnalysisResult(`Disease: ${result.disease}\n\nDescription: ${result.description}\n\nTreatment Recommendations:\n${result.treatmentRecommendations.join('\n')}`);
       } catch (error) {
         console.error('Error analyzing image:', error);
         setAnalysisResult('An error occurred while analyzing the image. Please try again.');
