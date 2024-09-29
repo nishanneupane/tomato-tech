@@ -19,6 +19,7 @@ const LandingPage = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [cameraError, setCameraError] = useState<string | null>(null)
   const [imageSource, setImageSource] = useState<'camera' | 'upload' | null>(null)
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment')
 
   const webcamRef = useRef<Webcam>(null) 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -34,6 +35,10 @@ const LandingPage = () => {
     setAnalysisResult(null)
     setCameraError(null)
     setImageSource(null)
+  }
+
+  const switchCamera = () => {
+    setFacingMode(prevMode => prevMode === 'user' ? 'environment' : 'user')
   }
 
   const captureImage = useCallback(() => {
@@ -112,6 +117,8 @@ const LandingPage = () => {
           fileInputRef={fileInputRef}
           imageSource={imageSource}
           setImageSource={setImageSource}
+          facingMode={facingMode}
+          switchCamera={switchCamera}
         />
         <FeaturesSection />
         <HowItWorksSection activeSection={activeSection} toggleSection={toggleSection} />
